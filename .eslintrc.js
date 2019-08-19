@@ -15,6 +15,6 @@ module.exports = {
     ecmaVersion: 2018,
   },
   rules: {
-    indent: [2, 2],
+    indent: [2, 'tab'],
   },
 };
