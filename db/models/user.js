@@ -1,6 +1,7 @@
 const { Model } = require('../index');
+const Password = require('objection-password')();
 
-class User extends Model {
+class User extends Password(Model) {
   static get tableName() {
     return 'user';
   }
@@ -12,7 +13,7 @@ class User extends Model {
       properties: {
         username: { type: 'string', minLength: 1, maxLength: 125 },
         email: { type: 'string', minLength: 5, maxLength: 125 },
-        password: { type: 'string', minLength: 7, maxLength: 65 },
+        password: { type: 'string', minLength: 3, maxLength: 120 },
       },
     };
   }
