@@ -9,10 +9,11 @@ class User extends Password(Model) {
   static get jsonSchema() {
     return {
       type: 'object',
-      required: [],
+      required: ['username', 'email', 'role', 'password'],
       properties: {
         username: { type: 'string', minLength: 1, maxLength: 125 },
         email: { type: 'string', minLength: 5, maxLength: 125 },
+        role: { type: 'string', enum: ['admin', 'user'] },
         password: { type: 'string', minLength: 3, maxLength: 120 },
       },
     };
@@ -28,6 +29,10 @@ class User extends Password(Model) {
 
   static get inputType() {
     return inputType;
+  }
+
+  $beforeInsert() {
+    this.created_at = new Date().toISOString();
   }
 }
 
