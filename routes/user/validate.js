@@ -1,8 +1,10 @@
 const express = require('express');
-const userRoutes = require('./user');
 
 const router = express.Router();
 
-router.use('/user', userRoutes);
+
+router.post('/validate', (req, res, next) => {
+  res.json({ str: 'validate' });
+});
 
 module.exports = router;
