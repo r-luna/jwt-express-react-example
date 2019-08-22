@@ -1,5 +1,5 @@
 
 const create = require('./create');
-const validate = require('./validate');
+const login = require('./login');
 
-module.exports = [ create, validate ];
+module.exports = [create, login];
