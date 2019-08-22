@@ -9,12 +9,13 @@ const authorize = () => {
         const person = await User.query().first().where({ email: req.body.email });
         const { username, email, role } = person;
         const passwordIsValid = await person.verifyPassword(req.body.password);
-        res.locals.user = {
+        const userData = {
           authorized: passwordIsValid,
           username,
           email,
           role,
         };
+        Object.assign(res.locals.user, userData);
       } catch (err) {
         res.locals.user = { authorized: false, authmessage: err };
       }
