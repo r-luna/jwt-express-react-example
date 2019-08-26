@@ -3,9 +3,14 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser')
 const logger = require('morgan');
+const cors = require('cors');
 require('dotenv').config();
 
 const indexRouter = require('./routes');
+
+const corsConfig = {
+  origin: `${process.env.CORS_ORIGIN}`,
+};
 
 const app = express();
 
@@ -17,6 +22,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api', indexRouter);
+app.use('/api', cors(corsConfig), indexRouter);
 
 module.exports = app;
