@@ -12,7 +12,7 @@ const router = express.Router();
 router.post('/login', exists(), authorize(), jwtSign(), dropCookie(), (req, res, next) => {
   let response;
   if (res.locals.user.cookieDropped) {
-    const { username, email, role } = res.locals.user;
+    const { username, email, role, jwt } = res.locals.user;
     res.status(200);
     response = {
       status: 'success',
@@ -21,6 +21,7 @@ router.post('/login', exists(), authorize(), jwtSign(), dropCookie(), (req, res,
         username,
         email,
         role,
+        jwt
       },
     };
   } else {
