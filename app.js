@@ -9,7 +9,7 @@ require('dotenv').config();
 const indexRouter = require('./routes');
 
 const corsConfig = {
-  origin: `${process.env.CORS_ORIGIN}`,
+  origin: process.env.CORS_ORIGIN,
   credentials: true,
 };
 
@@ -25,3 +25,5 @@ app.use(cors(corsConfig));
 app.use('/api', indexRouter);
 
 module.exports = app;
+
+app.listen(8000);
