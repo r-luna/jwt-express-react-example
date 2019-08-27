@@ -1,3 +1,4 @@
 /node_modules
 /client
 /db/dev.sqlite3
+.env

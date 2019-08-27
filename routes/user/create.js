@@ -9,7 +9,6 @@ router.post('/create', async (req, res, next) => {
   const graph = req.body;
   let insertedGraph = null;
 
-  console.log(graph);
   // does user exist?
   const prevUser = User.query().findOne(
     {
