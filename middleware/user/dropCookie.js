@@ -4,7 +4,7 @@ const dropCookie = () => {
     const { exists, authorized, jwt } = res.locals.user;
     if (exists && authorized && jwt) {
       try {
-        await res.cookie('jwt', jwt, { httpOnly: true, expires: new Date(Date.now() + (60000) * process.env.JWT_EXP) });
+        await res.cookie('jwt', jwt, { sameSite: 'strict', httpOnly: true, expires: new Date(Date.now() + (60000) * process.env.JWT_EXP) });
       } catch(err) {
         res.locals.user.cookieDropped = false;
       }
