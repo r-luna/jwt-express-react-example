@@ -10,6 +10,7 @@ const indexRouter = require('./routes');
 
 const corsConfig = {
   origin: `${process.env.CORS_ORIGIN}`,
+  credentials: true,
 };
 
 const app = express();
@@ -21,7 +22,8 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors(corsConfig));
 
-app.use('/api', cors(corsConfig), indexRouter);
+app.use('/api', indexRouter);
 
 module.exports = app;
