@@ -20,7 +20,7 @@ router.post('/create', async (req, res, next) => {
         insertedGraph = await transaction(User.knex(), trx => {
           return (
             User.query(trx)
-              .allowInsert('[username, email, password]')
+              .allowInsert('[fname, lname, email, password]')
               .insertGraph(graph)
           );
         });

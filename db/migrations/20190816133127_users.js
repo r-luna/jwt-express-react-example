@@ -3,7 +3,8 @@
 exports.up = (knex) => {
   return knex.schema.createTable('user', (table) => {
     table.increments('id').primary();
-    table.string('username');
+    table.string('fname');
+    table.string('lname');
     table.string('email');
     table.string('role');
     table.string('password');

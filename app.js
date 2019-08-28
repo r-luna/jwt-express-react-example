@@ -25,5 +25,3 @@ app.use(cors(corsConfig));
 app.use('/api', indexRouter);
 
 module.exports = app;
-
-app.listen(8000);
