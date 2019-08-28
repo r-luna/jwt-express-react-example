@@ -4,7 +4,6 @@ const { User } = require('../../db/models');
 
 const router = express.Router();
 
-
 router.post('/create', async (req, res, next) => {
   const graph = req.body;
   let insertedGraph = null;
@@ -20,7 +19,7 @@ router.post('/create', async (req, res, next) => {
         insertedGraph = await transaction(User.knex(), trx => {
           return (
             User.query(trx)
-              .allowInsert('[fname, lname, email, password]')
+              .allowInsert('[fname, lname, email, role, hash]')
               .insertGraph(graph)
           );
         });

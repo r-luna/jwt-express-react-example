@@ -1,5 +1,5 @@
-
 const { User } = require('../../db/models');
+const bcrypt = require('bcrypt');
 
 // eslint-disable-next-line arrow-body-style
 const authorize = () => {
@@ -7,11 +7,12 @@ const authorize = () => {
     if (res.locals.user.exists) {
       try {
         const person = await User.query().first().where({ email: req.body.email });
-        const { username, email, role } = person;
-        const passwordIsValid = await person.verifyPassword(req.body.password);
+        const { fname, lname, email, role, password: hash } = person;
+        const passwordIsValid = await bcrypt.compareSync(req.body.password, hash);
         const userData = {
           authorized: passwordIsValid,
-          username,
+          fname,
+          lname,
           email,
           role,
         };
