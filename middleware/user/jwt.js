@@ -25,17 +25,27 @@ const jwtSign = () => {
   };
 };
 
-const jwtVerify = (token) => {
-  const claims = {
-    alg: process.env.JWT_ALGO, // algorithm
-    typ: 'JWT',
-  };
-  try {
-    return jwt.verify(token, process.env.JWT_KEY, claims); // decoded, null if invalid
-  } catch (e) {
-    return e;
+const jwtVerify = () => {
+  return async (req, res, next) => {
+    const token = req.cookies.jwt;
+    if (token) {
+      const claims = {
+        alg: process.env.JWT_ALGO, // algorithm
+        typ: 'JWT',
+      };
+      try {
+        res.locals.user = { jwtVerified: await jwt.verify(token, process.env.JWT_KEY, claims) }; // decoded, null if invalid
+        console.log('SUCCESS', res.locals.user);
+      } catch (err){
+        res.locals.user = { jwtVerified: false, error: { ...err } };
+      }
+    } else {
+      res.locals.user = { jwtVerified: false };
+    }
+    next();
   }
 };
+
 
 const jwtDecode = token => jwt.decode(token, { complete: true });
 
