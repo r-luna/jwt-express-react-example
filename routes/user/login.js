@@ -12,13 +12,14 @@ const router = express.Router();
 router.post('/login', exists(), authorize(), jwtSign(), dropCookie(), (req, res, next) => {
   let response;
   if (res.locals.user.cookieDropped) {
-    const { username, email, role, jwt } = res.locals.user;
+    const { fname, lname, email, role, jwt } = res.locals.user;
     res.status(200);
     response = {
       status: 'success',
       message: 'Login Success',
       user: {
-        username,
+        fname,
+        lname,
         email,
         role,
         jwt

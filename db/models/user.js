@@ -1,7 +1,7 @@
 const { Model } = require('../index');
-const Password = require('objection-password')();
+const bcrypt = require('bcrypt');
 
-class User extends Password(Model) {
+class User extends Model {
   static get tableName() {
     return 'user';
   }
@@ -15,7 +15,7 @@ class User extends Password(Model) {
         lname: { type: 'string', minLength: 1, maxLength: 60 },
         email: { type: 'string', minLength: 5, maxLength: 125 },
         role: { type: 'string', enum: ['admin', 'employer'] },
-        password: { type: 'string', minLength: 3, maxLength: 120 },
+        password: { type: 'string', minLength: 10, maxLength: 256 },
       },
     };
   }
@@ -32,7 +32,8 @@ class User extends Password(Model) {
     return inputType;
   }
 
-  $beforeInsert() {
+  async $beforeInsert(queryContext) {
+    this.password = await bcrypt.hashSync(this.password, parseInt(process.env.BCRYPT_SALT_ROUNDS));
     this.created_at = new Date().toISOString();
   }
 }
