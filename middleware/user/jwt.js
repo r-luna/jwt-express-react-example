@@ -12,7 +12,7 @@ const jwtSign = () => {
         lname,
         email,
         role,
-        exp: Math.floor(Date.now() / 1000) + (60 * process.env.JWT_EXP),
+        exp: Math.floor(Date.now() + (1000 * (60 * process.env.JWT_EXP))),
         iat: Date.now(),
         alg: process.env.JWT_ALGO, // algorithm
         typ: 'JWT',
