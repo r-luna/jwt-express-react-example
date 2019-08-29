@@ -6,9 +6,10 @@ const jwtSign = () => {
   return (req, res, next) => {
     const { exists, authorized } = res.locals.user;
     if (exists && authorized) {
-      const { username, email, role } = res.locals.user;
+      const { fname, lname, email, role } = res.locals.user;
       const payloadWithClaims = {
-        username,
+        fname,
+        lname,
         email,
         role,
         exp: Math.floor(Date.now() / 1000) + (60 * process.env.JWT_EXP),
@@ -34,8 +35,7 @@ const jwtVerify = () => {
         typ: 'JWT',
       };
       try {
-        res.locals.user = { jwtVerified: await jwt.verify(token, process.env.JWT_KEY, claims) }; // decoded, null if invalid
-        console.log('SUCCESS', res.locals.user);
+        res.locals.user = { jwtVerified: await jwt.verify(token, process.env.JWT_KEY, claims), jwt: token }; // decoded, null if invalid
       } catch (err){
         res.locals.user = { jwtVerified: false, error: { ...err } };
       }
