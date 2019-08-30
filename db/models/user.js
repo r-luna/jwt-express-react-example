@@ -11,11 +11,11 @@ class User extends Model {
       type: 'object',
       required: ['fname', 'lname', 'email', 'role', 'password'],
       properties: {
-        fname: { type: 'string', minLength: 1, maxLength: 60 },
-        lname: { type: 'string', minLength: 1, maxLength: 60 },
-        email: { type: 'string', minLength: 5, maxLength: 125 },
+        fname: { type: 'string', minLength: 2, maxLength: 60 },
+        lname: { type: 'string', minLength: 2, maxLength: 60 },
+        email: { type: 'string', minLength: 6, maxLength: 125 },
         role: { type: 'string', enum: ['admin', 'employer'] },
-        password: { type: 'string', minLength: 10, maxLength: 256 },
+        password: { type: 'string', minLength: 7, maxLength: 65 },
       },
     };
   }
